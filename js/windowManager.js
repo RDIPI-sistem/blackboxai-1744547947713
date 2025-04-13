@@ -36,6 +36,43 @@ class WindowManager {
                 height: 500,
                 icon: 'fas fa-cog',
                 content: '<div class="settings">Settings Panel</div>'
+            },
+            'infini-browcer': {
+                title: 'InfiBrowcer',
+                width: 800,
+                height: 600,
+                icon: 'fas fa-globe',
+                content: `
+                    <div class="browser-container">
+                        <div class="browser-toolbar">
+                            <button class="back-btn"><i class="fas fa-arrow-left"></i></button>
+                            <button class="forward-btn"><i class="fas fa-arrow-right"></i></button>
+                            <button class="refresh-btn"><i class="fas fa-sync-alt"></i></button>
+                            <input type="text" class="address-bar" placeholder="Enter URL or search...">
+                            <button class="go-btn"><i class="fas fa-search"></i></button>
+                        </div>
+                        <iframe class="browser-view" sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe>
+                    </div>
+                `
+            },
+            'search': {
+                title: 'Search',
+                width: 500,
+                height: 300,
+                icon: 'fas fa-search',
+                content: `
+                    <div class="search-app">
+                        <input type="text" class="search-input" placeholder="Search files and apps...">
+                        <div class="search-results"></div>
+                    </div>
+                `
+            },
+            'terminal': {
+                title: 'Terminal',
+                width: 600,
+                height: 400,
+                icon: 'fas fa-terminal',
+                content: '<div class="terminal-app" contenteditable="true"></div>'
             }
         };
     }
