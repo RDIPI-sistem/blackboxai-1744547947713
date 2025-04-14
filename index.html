@@ -3,39 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Windows 12 Web OS</title>
+    <title>Hybrid OS (Windows/Ubuntu)</title>
     <link href="https://cdn.tailwindcss.com" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="css/styles.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500&display=swap');
+        
+        /* Hot corner area */
+        .hot-corner {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            z-index: 100;
+        }
+        #top-left { top: 0; left: 0; }
+        #top-right { top: 0; right: 0; }
     </style>
 </head>
 <body>
+    <!-- Ubuntu Workspaces -->
+    <div id="workspaces" class="fixed top-2 left-1/2 transform -translate-x-1/2 flex gap-2 z-50">
+        <div class="workspace-indicator w-3 h-3 rounded-full bg-white bg-opacity-30 border border-white border-opacity-50"></div>
+        <div class="workspace-indicator w-3 h-3 rounded-full bg-white bg-opacity-10 border border-white border-opacity-20"></div>
+    </div>
+
+    <!-- Windows Snap Layout Guides -->
+    <div id="snap-guides" class="hidden fixed inset-0 pointer-events-none">
+        <div class="absolute top-0 left-1/2 w-1 h-full bg-blue-500 bg-opacity-30"></div>
+        <div class="absolute left-0 top-1/2 w-full h-1 bg-blue-500 bg-opacity-30"></div>
+    </div>
+
+    <!-- Hot Corners -->
+    <div class="hot-corner" id="top-left"></div>
+    <div class="hot-corner" id="top-right"></div>
+
     <div id="desktop">
         <!-- Desktop icons will be added dynamically -->
     </div>
     
-    <div id="taskbar">
-        <div class="taskbar-left">
+    <!-- Windows Taskbar / Ubuntu Dock -->
+    <div id="taskbar" class="flex justify-between items-center">
+        <!-- Windows Start Button / Ubuntu App Launcher -->
+        <div class="taskbar-left flex items-center gap-4">
             <button id="start-button" class="start-button">
                 <i class="fab fa-windows"></i>
+            </button>
+            <button id="app-grid-button" class="hidden">
+                <i class="fas fa-th-large"></i>
             </button>
             <div class="taskbar-search">
                 <i class="fas fa-search"></i>
                 <span>Search</span>
             </div>
         </div>
-        <div class="taskbar-center">
-            <!-- Running apps will appear here -->
+
+        <!-- Running Apps / Task View -->
+        <div class="taskbar-center flex gap-1">
+            <!-- Apps will appear here -->
         </div>
+
+        <!-- System Tray / Indicators -->
         <div class="taskbar-right">
-            <div class="system-tray">
-                <i class="fas fa-wifi"></i>
-                <i class="fas fa-volume-up"></i>
+            <div class="system-tray flex items-center gap-4">
+                <!-- Windows Action Center Toggle -->
+                <button id="action-center-toggle">
+                    <i class="fas fa-comment-alt"></i>
+                </button>
+                
+                <!-- Ubuntu Indicators -->
+                <div class="ubuntu-indicators hidden">
+                    <i class="fas fa-network-wired"></i>
+                    <i class="fas fa-battery-three-quarters"></i>
+                </div>
+                
                 <div class="clock">12:00 PM</div>
             </div>
         </div>
+    </div>
+
+    <!-- Windows Action Center -->
+    <div id="action-center" class="hidden fixed right-0 bottom-16 w-96 h-1/2 bg-white bg-opacity-90 backdrop-blur-md rounded-tl-lg shadow-xl p-4">
+        <h3 class="font-semibold mb-4">Notifications</h3>
+        <div class="notifications-container"></div>
+    </div>
+
+    <!-- Ubuntu App Grid -->
+    <div id="app-grid" class="hidden fixed inset-0 bg-black bg-opacity-80 z-50 p-8 grid grid-cols-6 gap-6">
+        <!-- Apps will be populated here -->
     </div>
 
     <!-- Scripts -->
@@ -43,5 +99,6 @@
     <script src="js/os.js"></script>
     <script src="js/apps.js"></script>
     <script src="js/fileSystem.js"></script>
+    <script src="js/hybridFeatures.js"></script>
 </body>
 </html>
