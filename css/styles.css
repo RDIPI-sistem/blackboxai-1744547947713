@@ -26,8 +26,7 @@ body {
     left: 0;
     right: 0;
     bottom: 48px;
-    background-image: url('../assets/background.jpg');
-    background-size: cover;
+    background-color: var(--accent-color);
     display: flex;
     flex-wrap: wrap;
     align-content: flex-start;
@@ -146,90 +145,91 @@ body {
 }
 
 /* Start Menu */
-#start-menu {
+.start-menu {
     position: fixed;
-    bottom: 48px;
+    bottom: 60px;
     left: 10px;
-    width: 500px;
-    height: 600px;
+    width: 400px;
+    max-height: 500px;
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    display: none;
+    display: flex;
     flex-direction: column;
     z-index: 2000;
-}
-
-#start-menu.visible {
-    display: flex;
+    overflow: hidden;
 }
 
 .start-menu-header {
-    height: 60px;
-    background-color: var(--accent-color);
-    color: white;
-    display: flex;
-    align-items: center;
-    padding: 0 20px;
+    padding: 15px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.user-profile {
+.start-menu-header input.search {
+    width: 100%;
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    outline: none;
+}
+
+.app-categories {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+.category {
+    margin-bottom: 15px;
+}
+
+.category h4 {
+    margin: 0 0 10px 0;
+    color: var(--accent-color);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.app-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 10px;
 }
 
-.user-profile img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-.start-menu-apps {
-    flex: 1;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-    padding: 20px;
-    overflow-y: auto;
-}
-
-.app-tile {
+.app-item {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: 10px;
+    padding: 8px 12px;
     border-radius: 4px;
     cursor: pointer;
 }
 
-.app-tile:hover {
-    background-color: rgba(0, 0, 0, 0.05);
+.app-item:hover {
+    background-color: rgba(0, 120, 215, 0.1);
 }
 
-.app-tile i {
-    font-size: 24px;
-    margin-bottom: 5px;
+.app-item i {
+    margin-right: 10px;
     color: var(--accent-color);
 }
 
-.start-menu-footer {
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    padding: 0 20px;
+.recent-apps {
+    padding: 15px;
     border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.power-button {
-    background: none;
-    border: none;
-    font-size: 18px;
-    cursor: pointer;
-    color: var(--text-dark);
+.recent-apps h4 {
+    margin: 0 0 10px 0;
+    color: var(--accent-color);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.recent-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
 /* Desktop Icons */
