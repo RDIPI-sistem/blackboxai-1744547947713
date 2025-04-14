@@ -14,21 +14,67 @@ class WindowManager {
                 width: 600,
                 height: 400,
                 icon: 'far fa-folder',
-                content: '<div class="file-explorer">File Explorer Content</div>'
+                content: `
+                    <div class="file-explorer">
+                        <div class="toolbar">
+                            <button class="new-folder"><i class="fas fa-folder-plus"></i> New Folder</button>
+                            <button class="new-file"><i class="fas fa-file-alt"></i> New File</button>
+                            <input type="text" class="search" placeholder="Search files...">
+                        </div>
+                        <div class="file-list"></div>
+                        <div class="status-bar">
+                            <span class="item-count">0 items</span>
+                            <span class="selected-count">0 selected</span>
+                        </div>
+                    </div>
+                `,
+                onLoad: (windowElement) => {
+                    new FileExplorer(windowElement);
+                }
             },
             'notepad': {
                 title: 'Notepad',
-                width: 500,
-                height: 400,
+                width: 600,
+                height: 500,
                 icon: 'far fa-file-alt',
-                content: '<textarea class="notepad-content" style="width:100%;height:100%;"></textarea>'
+                content: '<textarea class="notepad-content" style="width:100%;height:calc(100% - 40px);margin-top:40px;"></textarea>',
+                onLoad: (windowElement) => {
+                    windowElement.classList.add('notepad-window');
+                    new Notepad(windowElement);
+                }
             },
             'calculator': {
                 title: 'Calculator',
-                width: 300,
-                height: 400,
+                width: 350,
+                height: 500,
                 icon: 'fas fa-calculator',
-                content: '<div class="calculator">Calculator UI will go here</div>'
+                content: '<div class="calculator-content"></div>',
+                onLoad: (windowElement) => {
+                    windowElement.classList.add('calculator-window');
+                    new Calculator(windowElement);
+                }
+            },
+            'media-player': {
+                title: 'Media Player',
+                width: 600,
+                height: 500,
+                icon: 'fas fa-play-circle',
+                content: '<div class="media-player-content"></div>',
+                onLoad: (windowElement) => {
+                    windowElement.classList.add('media-player-window');
+                    new MediaPlayer(windowElement);
+                }
+            },
+            'paint': {
+                title: 'Paint',
+                width: 800,
+                height: 600,
+                icon: 'fas fa-paint-brush',
+                content: '<div class="paint-content"></div>',
+                onLoad: (windowElement) => {
+                    windowElement.classList.add('paint-window');
+                    new Paint(windowElement);
+                }
             },
             'settings': {
                 title: 'Settings',
@@ -36,43 +82,6 @@ class WindowManager {
                 height: 500,
                 icon: 'fas fa-cog',
                 content: '<div class="settings">Settings Panel</div>'
-            },
-            'infini-browcer': {
-                title: 'InfiBrowcer',
-                width: 800,
-                height: 600,
-                icon: 'fas fa-globe',
-                content: `
-                    <div class="browser-container">
-                        <div class="browser-toolbar">
-                            <button class="back-btn"><i class="fas fa-arrow-left"></i></button>
-                            <button class="forward-btn"><i class="fas fa-arrow-right"></i></button>
-                            <button class="refresh-btn"><i class="fas fa-sync-alt"></i></button>
-                            <input type="text" class="address-bar" placeholder="Enter URL or search...">
-                            <button class="go-btn"><i class="fas fa-search"></i></button>
-                        </div>
-                        <iframe class="browser-view" sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe>
-                    </div>
-                `
-            },
-            'search': {
-                title: 'Search',
-                width: 500,
-                height: 300,
-                icon: 'fas fa-search',
-                content: `
-                    <div class="search-app">
-                        <input type="text" class="search-input" placeholder="Search files and apps...">
-                        <div class="search-results"></div>
-                    </div>
-                `
-            },
-            'terminal': {
-                title: 'Terminal',
-                width: 600,
-                height: 400,
-                icon: 'fas fa-terminal',
-                content: '<div class="terminal-app" contenteditable="true"></div>'
             }
         };
     }
@@ -120,6 +129,11 @@ class WindowManager {
         this.windows.push(windowObj);
         this.setupWindowEvents(windowElement, windowObj);
         this.focusWindow(windowObj);
+
+        if (template.onLoad) {
+            template.onLoad(windowElement);
+        }
+
         return windowObj;
     }
 
@@ -229,7 +243,7 @@ class WindowManager {
             
             windowElement.classList.add('maximized');
             windowElement.style.width = '100%';
-            windowElement.style.height = 'calc(100% - 32px)';
+            windowElement.style.height = '100%';
             windowElement.style.left = '0';
             windowElement.style.top = '0';
         }
@@ -239,7 +253,7 @@ class WindowManager {
 // Initialize window manager
 const windowManager = new WindowManager();
 
-// Export functions for OS to use
+// Global functions for window management
 function openWindow(appId, options) {
     return windowManager.createWindow(appId, options);
 }
