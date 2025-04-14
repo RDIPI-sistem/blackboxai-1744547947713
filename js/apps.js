@@ -25,6 +25,24 @@ class AppManager {
                 name: 'Settings',
                 icon: 'fas fa-cog',
                 handler: this.openSettings
+            },
+            {
+                id: 'infini-browcer',
+                name: 'InfiBrowcer',
+                icon: 'fas fa-globe',
+                handler: this.openBrowser
+            },
+            {
+                id: 'search',
+                name: 'Search',
+                icon: 'fas fa-search',
+                handler: this.openSearch
+            },
+            {
+                id: 'terminal',
+                name: 'Terminal',
+                icon: 'fas fa-terminal',
+                handler: this.openTerminal
             }
         ];
     }
@@ -57,44 +75,7 @@ class AppManager {
         return this.apps;
     }
 
-    populateStartMenu() {
-        const startMenu = document.getElementById('start-menu-apps');
-        if (!startMenu) return;
-
-        startMenu.innerHTML = '';
-        this.apps.forEach(app => {
-            const tile = document.createElement('div');
-            tile.className = 'app-tile';
-            tile.innerHTML = `
-                <i class="${app.icon}"></i>
-                <span>${app.name}</span>
-            `;
-            tile.addEventListener('click', () => app.handler());
-            startMenu.appendChild(tile);
-        });
-    }
 }
 
 // Initialize app manager
 const appManager = new AppManager();
-
-// Export functions for OS to use
-function populateStartMenu() {
-    appManager.populateStartMenu();
-}
-
-function toggleStartMenu() {
-    const startMenu = document.getElementById('start-menu');
-    startMenu.classList.toggle('visible');
-    if (startMenu.classList.contains('visible')) {
-        populateStartMenu();
-    }
-}
-
-// Initialize start menu button
-document.addEventListener('DOMContentLoaded', () => {
-    const startButton = document.getElementById('start-button');
-    if (startButton) {
-        startButton.addEventListener('click', toggleStartMenu);
-    }
-});
